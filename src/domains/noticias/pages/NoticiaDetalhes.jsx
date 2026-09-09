@@ -20,13 +20,15 @@ export default function NoticiaDetalhes() {
 
   const returnPath = location.state?.from || '/destaques';
   const returnLabel = location.state?.fromLabel || (returnPath === '/' ? 'Início' : 'Destaques');
-  const fromSection = location.state?.fromSection || '';
   const backButtonText = returnPath === '/' ? 'Voltar ao Início' : `Voltar a ${returnLabel}`;
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    const hash = fromSection ? `#${fromSection}` : '';
-    navigate(returnPath + hash);
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(returnPath);
+    }
   };
 
   useEffect(() => {
@@ -175,7 +177,7 @@ export default function NoticiaDetalhes() {
               >
                 <Link
                   to={`/noticias/${item.id}`}
-                  state={{ from: returnPath, fromLabel: returnLabel, fromSection }}
+                  state={{ from: returnPath, fromLabel: returnLabel }}
                   className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   {(item.capa_url || item.capa_data) && (

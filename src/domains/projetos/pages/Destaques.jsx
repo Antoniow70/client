@@ -186,7 +186,7 @@ export default function ProjetosSociais() {
                 >
                   <ProjectCard
                     project={project}
-                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/destaques', fromSection: 'secao-projetos' } })}
+                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/destaques' } })}
                   />
                 </div>
               ))}
@@ -248,7 +248,7 @@ export default function ProjetosSociais() {
                 >
                   <Link
                     to={`/noticias/${item.id}`}
-                    state={{ from: '/destaques', fromLabel: 'Destaques', fromSection: 'secao-noticias' }}
+                    state={{ from: '/destaques', fromLabel: 'Destaques' }}
                     className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                   >
                     <div>

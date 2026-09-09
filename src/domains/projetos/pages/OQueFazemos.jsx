@@ -258,7 +258,7 @@ export default function OQueFazemos() {
                       <ProjectCard
                         key={project.id}
                         project={project}
-                        onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/o-que-fazemos', fromSection: '' } })}
+                        onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/o-que-fazemos' } })}
                       />
                     ))}
                   </div>

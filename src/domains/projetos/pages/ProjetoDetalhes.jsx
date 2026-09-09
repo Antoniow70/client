@@ -16,11 +16,13 @@ export default function ProjetoDetalhes() {
   const scrollContainerRef = useRef(null);
 
   const returnPath = location.state?.from || '/destaques';
-  const fromSection = location.state?.fromSection || '';
 
   const handleGoBack = () => {
-    const hash = fromSection ? `#${fromSection}` : '';
-    navigate(returnPath + hash);
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate(returnPath);
+    }
   };
 
   const scroll = (direction) => {

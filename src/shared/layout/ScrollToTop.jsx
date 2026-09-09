@@ -1,12 +1,18 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigationType } from 'react-router-dom';
 
 export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
+  const navType = useNavigationType();
 
   useEffect(() => {
+    // On back/forward navigation (POP), do not reset scroll to top —
+    // allow the browser to restore the exact scroll position where the user was.
+    if (navType === 'POP') {
+      return;
+    }
+
     if (hash) {
-      // Small delay to let the page render before scrolling to the section
       const timer = setTimeout(() => {
         const el = document.getElementById(hash.replace('#', ''));
         if (el) {
@@ -17,7 +23,8 @@ export default function ScrollToTop() {
     } else {
       window.scrollTo(0, 0);
     }
-  }, [pathname, hash]);
+  }, [pathname, hash, navType]);
 
   return null;
 }
+

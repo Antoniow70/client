@@ -264,15 +264,22 @@ export default function ProjetoDetalhes() {
           </div>
 
           {team.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
               {team.map((person, i) => (
-                <TeamMemberCard
+                <div
                   key={person.id}
-                  person={person}
-                  index={i}
-                  isFlipped={flippedId === person.id}
-                  onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
-                />
+                  className="w-[78vw] max-w-[280px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none"
+                >
+                  <TeamMemberCard
+                    person={person}
+                    index={i}
+                    isFlipped={flippedId === person.id}
+                    onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
+                  />
+                </div>
               ))}
             </div>
           ) : (

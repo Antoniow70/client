@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate, Link } from 'react-router-dom';
 import ProjectCard from '../cards/ProjectCard';
-import { Search, Filter, Loader2, Calendar, ChevronRight, Newspaper, Play } from 'lucide-react';
+import { Search, Filter, Loader2, Calendar, ChevronRight, Newspaper, Play, ArrowRight } from 'lucide-react';
 import { getAllActivities, getProjects } from '../services/projetosApi';
 import { getNews } from '../../noticias/services/noticiasApi';
 import Partners from '../../parceiros/components/Partners';
@@ -175,14 +175,32 @@ export default function ProjetosSociais() {
             <p className="text-brand-eastBay dark:text-dark-muted text-sm font-medium">A carregar projetos...</p>
           </div>
         ) : filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onClick={() => navigate('/projetos-sociais/' + project.id)}
-              />
-            ))}
+          <div className="space-y-3">
+            {/* Indicador para mobile */}
+            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
+              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+              </span>
+              <span className="text-[11px] opacity-75">{filteredProjects.length} projetos</span>
+            </div>
+
+            {/* Layout Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {filteredProjects.map((project) => (
+                <div
+                  key={project.id}
+                  className="w-[78vw] max-w-[290px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none"
+                >
+                  <ProjectCard
+                    project={project}
+                    onClick={() => navigate('/projetos-sociais/' + project.id)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="text-center py-20 space-y-5 bg-transparent rounded-2xl border border-dashed border-slate-200 max-w-3xl mx-auto">
@@ -226,47 +244,66 @@ export default function ProjetosSociais() {
             </motion.h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {newsList.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
-              >
-                <Link
-                  to={`/noticias/${item.id}`}
-                  className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full"
+          <div className="space-y-3">
+            {/* Indicador para mobile */}
+            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
+              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+              </span>
+              <span className="text-[11px] opacity-75">{newsList.length} notícias</span>
+            </div>
+
+            {/* Layout Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {newsList.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className="w-[82vw] max-w-[320px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none h-full"
                 >
-                  {(item.capa_url || item.capa_data) && (
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={item.capa_data || item.capa_url}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                      />
+                  <Link
+                    to={`/noticias/${item.id}`}
+                    className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
+                  >
+                    <div>
+                      {(item.capa_url || item.capa_data) && (
+                        <div className="aspect-video overflow-hidden">
+                          <img
+                            src={item.capa_data || item.capa_url}
+                            alt={item.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 space-y-2.5">
+                        <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-wider flex items-center gap-1">
+                          <Calendar size={10} />
+                          {formatDate(item.news_date)}
+                        </span>
+                        <h3 className="text-sm font-bold text-brand-bigStone dark:text-dark-text line-clamp-2 group-hover:text-brand-horizon transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-brand-eastBay dark:text-dark-muted line-clamp-2 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  )}
-                  <div className="p-5 space-y-2.5">
-                    <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-wider flex items-center gap-1">
-                      <Calendar size={10} />
-                      {formatDate(item.news_date)}
-                    </span>
-                    <h3 className="text-sm font-bold text-brand-bigStone dark:text-dark-text line-clamp-2 group-hover:text-brand-horizon transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-brand-eastBay dark:text-dark-muted line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
-                    <span className="text-[10px] font-bold text-brand-horizon flex items-center gap-1 pt-1">
-                      Ler mais <ChevronRight size={10} />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                    <div className="p-5 pt-0">
+                      <span className="text-[10px] font-bold text-brand-horizon flex items-center gap-1 pt-2 border-t border-brand-poloBlue/10 dark:border-dark-muted/10">
+                        Ler mais <ChevronRight size={10} />
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
       )}

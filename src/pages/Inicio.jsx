@@ -29,16 +29,16 @@ export default function Inicio() {
       try {
         setLoading(true);
         const [projectsData, newsData, teamData] = await Promise.all([
-          getProjects({ status: 'Concluido' }).catch(() => []),
+          getProjects().catch(() => []),
           getNews().catch(() => []),
           getTeam().catch(() => [])
         ]);
         
-        // Filter concluded and take at most 4
-        const concluded = (projectsData || [])
-          .filter(p => p.status === 'Concluido')
-          .slice(0, 4);
-        setDestaques(concluded);
+        // Ordenar pelos projetos mais recentes cadastrados (created_at desc)
+        const recentProjects = (projectsData || [])
+          .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
+          .slice(0, 8);
+        setDestaques(recentProjects);
 
         // Take at most 4 recent news
         setRecentNews((newsData || []).slice(0, 4));
@@ -226,22 +226,22 @@ export default function Inicio() {
         </div>
       </section>
 
-      {/* 5. Destaques (Projetos Concluidos) */}
-      <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-12">
+      {/* 5. Projetos Mais Recentes */}
+      <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-3">
             <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-[0.3em] block">
-              Impacto Concretizado
+              Iniciativas & Impacto
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-brand-bigStone dark:text-white tracking-tight leading-none">
-              Projetos Concluidos
+              Projetos Mais Recentes
             </h2>
           </div>
           <Link
             to="/destaques"
             className="btn-primary inline-flex items-center gap-1.5 text-xs py-3 px-5 shrink-0 self-start sm:self-auto"
           >
-            Ver todos destaques <ArrowRight size={14} />
+            Ver todos os projetos <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -250,18 +250,36 @@ export default function Inicio() {
             <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-brand-horizon"></div>
           </div>
         ) : destaques.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-dark-surface rounded-3xl border border-dashed border-slate-200 p-6">
-            <p className="text-sm text-brand-eastBay dark:text-dark-muted font-semibold">Sem projetos concluidos para exibicao no momento.</p>
+          <div className="text-center py-16 bg-white dark:bg-dark-surface rounded-3xl border border-dashed border-slate-200 dark:border-dark-muted/20 p-6">
+            <p className="text-sm text-brand-eastBay dark:text-dark-muted font-semibold">Sem projetos cadastrados para exibicao no momento.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {destaques.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onClick={() => navigate('/projetos-sociais/' + project.id)}
-              />
-            ))}
+          <div className="space-y-3">
+            {/* Indicador sutil para mobile */}
+            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
+              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+              </span>
+              <span className="text-[11px] opacity-75">{destaques.length} projetos</span>
+            </div>
+
+            {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {destaques.map((project) => (
+                <div
+                  key={project.id}
+                  className="w-[78vw] max-w-[290px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none"
+                >
+                  <ProjectCard
+                    project={project}
+                    onClick={() => navigate('/projetos-sociais/' + project.id)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </section>
@@ -342,16 +360,34 @@ export default function Inicio() {
             <div className="w-12 h-1 bg-brand-horizon mx-auto rounded-full mt-2" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {team.map((person, i) => (
-              <TeamMemberCard
-                key={person.id}
-                person={person}
-                index={i}
-                isFlipped={flippedId === person.id}
-                onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
-              />
-            ))}
+          <div className="space-y-3">
+            {/* Indicador sutil para mobile */}
+            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
+              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+              </span>
+              <span className="text-[11px] opacity-75">{team.length} membros</span>
+            </div>
+
+            {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {team.map((person, i) => (
+                <div
+                  key={person.id}
+                  className="w-[78vw] max-w-[280px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none"
+                >
+                  <TeamMemberCard
+                    person={person}
+                    index={i}
+                    isFlipped={flippedId === person.id}
+                    onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}

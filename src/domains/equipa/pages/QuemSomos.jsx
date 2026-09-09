@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Target, Users, Award } from 'lucide-react';
+import { Target, Users, Award, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import TeamMemberCard from '../cards/TeamMemberCard';
 import { getTeam } from '../services/equipaApi';
@@ -109,36 +109,51 @@ export default function QuemSomos() {
 
       {/* Mission/Vision */}
       <section className="py-16 px-6 md:px-12 lg:px-16 bg-transparent border-b border-brand-poloBlue/20 dark:border-dark-muted/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              title: 'Missao',
-              desc: 'Assegurar a inclusao e qualidade de ensino das pessoas com necessidades especiais, assim como garantir a sua insercao laboral no mercado de trabalho, atraves de acoes de protecao e intervencao social, e advocacia dos seus direitos.',
-              icon: <Target className="text-brand-horizon w-8 h-8" />
-            },
-            {
-              title: 'Visao',
-              desc: 'Estabelecer uma plataforma funcional e de referencia nacional, especializada em servicos sociais de rastreio, inclusao escolar e laboral para as pessoas com necessidades especiais.',
-              icon: <Award className="text-brand-horizon w-8 h-8" />
-            },
-            {
-              title: 'Valores',
-              desc: 'Unidade, Respeito pelos Direitos Humanos, Compaixao, Comprometimento, Responsabilidade, Honestidade, Justica Social, Solidariedade, Transparencia, Equidade e Universalidade.',
-              icon: <Users className="text-brand-horizon w-8 h-8" />
-            }
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -4 }}
-              className="bg-white/40 dark:bg-dark-surface/40 border border-brand-poloBlue/20 dark:border-dark-muted/10 p-8 rounded-2xl space-y-5 shadow-sm transition-all duration-300 backdrop-blur-xs"
-            >
-              <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-brand-poloBlue/15 dark:bg-dark-bg/60">
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-bold text-brand-bigStone dark:text-dark-text">{item.title}</h3>
-              <p className="text-brand-eastBay dark:text-dark-muted leading-relaxed text-sm">{item.desc}</p>
-            </motion.div>
-          ))}
+        <div className="max-w-7xl mx-auto space-y-4">
+          {/* Indicador sutil para mobile */}
+          <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted md:hidden px-1">
+            <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+              Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+            </span>
+            <span className="text-[11px] opacity-75">Missão, Visão & Valores</span>
+          </div>
+
+          <div
+            className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {[
+              {
+                title: 'Missao',
+                desc: 'Assegurar a inclusao e qualidade de ensino das pessoas com necessidades especiais, assim como garantir a sua insercao laboral no mercado de trabalho, atraves de acoes de protecao e intervencao social, e advocacia dos seus direitos.',
+                icon: <Target className="text-brand-horizon w-8 h-8" />
+              },
+              {
+                title: 'Visao',
+                desc: 'Estabelecer uma plataforma funcional e de referencia nacional, especializada em servicos sociais de rastreio, inclusao escolar e laboral para as pessoas com necessidades especiais.',
+                icon: <Award className="text-brand-horizon w-8 h-8" />
+              },
+              {
+                title: 'Valores',
+                desc: 'Unidade, Respeito pelos Direitos Humanos, Compaixao, Comprometimento, Responsabilidade, Honestidade, Justica Social, Solidariedade, Transparencia, Equidade e Universalidade.',
+                icon: <Users className="text-brand-horizon w-8 h-8" />
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -4 }}
+                className="w-[82vw] max-w-[320px] md:w-auto shrink-0 snap-center md:shrink md:snap-align-none bg-white/60 dark:bg-dark-surface/60 border border-brand-poloBlue/20 dark:border-dark-muted/10 p-7 md:p-8 rounded-2xl space-y-5 shadow-sm transition-all duration-300 backdrop-blur-xs flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-brand-poloBlue/15 dark:bg-dark-bg/60">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-brand-bigStone dark:text-dark-text">{item.title}</h3>
+                  <p className="text-brand-eastBay dark:text-dark-muted leading-relaxed text-sm">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -199,16 +214,34 @@ export default function QuemSomos() {
               <p className="text-brand-eastBay dark:text-dark-muted text-sm">Clique em saber mais para conhecer o membro.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-              {team.map((person, i) => (
-                <TeamMemberCard 
-                  key={person.id}
-                  person={person}
-                  index={i}
-                  isFlipped={flippedId === person.id}
-                  onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
-                />
-              ))}
+            <div className="space-y-3">
+              {/* Dica de deslizamento para mobile */}
+              <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
+                <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
+                  Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
+                </span>
+                <span className="text-[11px] opacity-75">{team.length} membros</span>
+              </div>
+
+              {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
+              <div
+                className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {team.map((person, i) => (
+                  <div
+                    key={person.id}
+                    className="w-[78vw] max-w-[280px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none"
+                  >
+                    <TeamMemberCard 
+                      person={person}
+                      index={i}
+                      isFlipped={flippedId === person.id}
+                      onToggle={() => setFlippedId(flippedId === person.id ? null : person.id)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

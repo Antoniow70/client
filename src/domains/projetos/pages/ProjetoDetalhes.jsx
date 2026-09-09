@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { getProjectById } from '../services/projetosApi';
 import { getTeam, TeamMemberCard } from '../../equipa';
@@ -8,11 +8,20 @@ import { ArrowRight, Heart, X, Play, ChevronLeft, ChevronRight, Check } from 'lu
 export default function ProjetoDetalhes() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [team, setTeam] = useState([]);
   const [flippedId, setFlippedId] = useState(null);
   const scrollContainerRef = useRef(null);
+
+  const returnPath = location.state?.from || '/destaques';
+  const fromSection = location.state?.fromSection || '';
+
+  const handleGoBack = () => {
+    const hash = fromSection ? `#${fromSection}` : '';
+    navigate(returnPath + hash);
+  };
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -67,7 +76,7 @@ export default function ProjetoDetalhes() {
 
   const getYouTubeId = (url) => {
     if (!url) return '';
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : '';
   };
@@ -89,7 +98,7 @@ export default function ProjetoDetalhes() {
       <section className="relative text-white pt-32 pb-16 px-6 overflow-hidden bg-brand-bigStone dark:text-dark-text">
         <div className="absolute top-4 left-4 md:left-8 z-30">
           <button
-            onClick={() => navigate(-1)}
+            onClick={handleGoBack}
             className="flex items-center gap-1.5 text-sm text-white/80 hover:text-white font-bold transition-all group"
           >
             <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" /> Voltar

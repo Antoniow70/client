@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { getNewsById, getNews } from '../services/noticiasApi';
@@ -20,7 +20,14 @@ export default function NoticiaDetalhes() {
 
   const returnPath = location.state?.from || '/destaques';
   const returnLabel = location.state?.fromLabel || (returnPath === '/' ? 'Início' : 'Destaques');
+  const fromSection = location.state?.fromSection || '';
   const backButtonText = returnPath === '/' ? 'Voltar ao Início' : `Voltar a ${returnLabel}`;
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    const hash = fromSection ? `#${fromSection}` : '';
+    navigate(returnPath + hash);
+  };
 
   useEffect(() => {
     async function load() {
@@ -51,7 +58,7 @@ export default function NoticiaDetalhes() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-6">
         <h2 className="text-2xl font-bold text-brand-bigStone dark:text-dark-text mb-4">Noticia nao encontrada</h2>
-        <Link to={returnPath} className="btn-primary px-6 py-2 text-sm">{backButtonText}</Link>
+        <button onClick={handleGoBack} className="btn-primary px-6 py-2 text-sm">{backButtonText}</button>
       </div>
     );
   }
@@ -78,13 +85,13 @@ export default function NoticiaDetalhes() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <Link
-              to={returnPath}
+            <button
+              onClick={handleGoBack}
               className="inline-flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white transition-colors uppercase tracking-wider"
             >
               <ArrowLeft size={14} />
               {backButtonText}
-            </Link>
+            </button>
           </motion.div>
 
           <motion.div
@@ -168,7 +175,7 @@ export default function NoticiaDetalhes() {
               >
                 <Link
                   to={`/noticias/${item.id}`}
-                  state={{ from: returnPath, fromLabel: returnLabel }}
+                  state={{ from: returnPath, fromLabel: returnLabel, fromSection }}
                   className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   {(item.capa_url || item.capa_data) && (

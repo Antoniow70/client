@@ -227,7 +227,7 @@ export default function Inicio() {
       </section>
 
       {/* 5. Projetos Mais Recentes */}
-      <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-8">
+      <section id="secao-projetos" className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-3">
             <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-[0.3em] block">
@@ -265,7 +265,7 @@ export default function Inicio() {
                 >
                   <ProjectCard
                     project={project}
-                    onClick={() => navigate('/projetos-sociais/' + project.id)}
+                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/', fromSection: 'secao-projetos' } })}
                   />
                 </div>
               ))}
@@ -275,7 +275,7 @@ export default function Inicio() {
 
       {/* 6. Noticias Recentes */}
       {recentNews.length > 0 && (
-        <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-12">
+        <section id="secao-noticias" className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-12">
           <div className="text-center space-y-3">
             <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-[0.3em] block">
               Noticias Recentes
@@ -298,7 +298,7 @@ export default function Inicio() {
               >
                 <Link
                   to={`/noticias/${item.id}`}
-                  state={{ from: '/', fromLabel: 'Início' }}
+                  state={{ from: '/', fromLabel: 'Início', fromSection: 'secao-noticias' }}
                   className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                 >
                   <div>

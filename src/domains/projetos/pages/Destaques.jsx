@@ -168,7 +168,7 @@ export default function ProjetosSociais() {
       </section>
 
       {/* Projects Grid */}
-      <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
+      <section id="secao-projetos" className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 space-y-4">
             <Loader2 className="animate-spin text-brand-horizon" size={36} />
@@ -186,7 +186,7 @@ export default function ProjetosSociais() {
                 >
                   <ProjectCard
                     project={project}
-                    onClick={() => navigate('/projetos-sociais/' + project.id)}
+                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/destaques', fromSection: 'secao-projetos' } })}
                   />
                 </div>
               ))}
@@ -212,7 +212,7 @@ export default function ProjetosSociais() {
 
       {/* Ultimas Noticias Section */}
       {newsList.length > 0 && (
-        <section className="mt-20 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
+        <section id="secao-noticias" className="mt-20 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
           <div className="text-center mb-10 space-y-3">
             <motion.span
               initial={{ opacity: 0, y: 10 }}
@@ -248,7 +248,7 @@ export default function ProjetosSociais() {
                 >
                   <Link
                     to={`/noticias/${item.id}`}
-                    state={{ from: '/destaques', fromLabel: 'Destaques' }}
+                    state={{ from: '/destaques', fromLabel: 'Destaques', fromSection: 'secao-noticias' }}
                     className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                   >
                     <div>

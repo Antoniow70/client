@@ -109,15 +109,7 @@ export default function QuemSomos() {
 
       {/* Mission/Vision */}
       <section className="py-16 px-6 md:px-12 lg:px-16 bg-transparent border-b border-brand-poloBlue/20 dark:border-dark-muted/10">
-        <div className="max-w-7xl mx-auto space-y-4">
-          {/* Indicador sutil para mobile */}
-          <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted md:hidden px-1">
-            <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
-              Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
-            </span>
-            <span className="text-[11px] opacity-75">Missão, Visão & Valores</span>
-          </div>
-
+        <div className="max-w-7xl mx-auto">
           <div
             className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 snap-x snap-mandatory pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -214,20 +206,10 @@ export default function QuemSomos() {
               <p className="text-brand-eastBay dark:text-dark-muted text-sm">Clique em saber mais para conhecer o membro.</p>
             </div>
 
-            <div className="space-y-3">
-              {/* Dica de deslizamento para mobile */}
-              <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
-                <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
-                  Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
-                </span>
-                <span className="text-[11px] opacity-75">{team.length} membros</span>
-              </div>
-
-              {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
-              <div
-                className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              >
+            <div
+              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
                 {team.map((person, i) => (
                   <div
                     key={person.id}
@@ -242,7 +224,6 @@ export default function QuemSomos() {
                   </div>
                 ))}
               </div>
-            </div>
           </div>
         </section>
       )}

@@ -254,20 +254,10 @@ export default function Inicio() {
             <p className="text-sm text-brand-eastBay dark:text-dark-muted font-semibold">Sem projetos cadastrados para exibicao no momento.</p>
           </div>
         ) : (
-          <div className="space-y-3">
-            {/* Indicador sutil para mobile */}
-            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
-              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
-                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
-              </span>
-              <span className="text-[11px] opacity-75">{destaques.length} projetos</span>
-            </div>
-
-            {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
-            <div
-              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
+          <div
+            className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
               {destaques.map((project) => (
                 <div
                   key={project.id}
@@ -279,7 +269,6 @@ export default function Inicio() {
                   />
                 </div>
               ))}
-            </div>
           </div>
         )}
       </section>
@@ -360,20 +349,10 @@ export default function Inicio() {
             <div className="w-12 h-1 bg-brand-horizon mx-auto rounded-full mt-2" />
           </div>
 
-          <div className="space-y-3">
-            {/* Indicador sutil para mobile */}
-            <div className="flex items-center justify-between text-xs text-brand-eastBay dark:text-dark-muted sm:hidden px-1">
-              <span className="flex items-center gap-1.5 text-brand-horizon font-medium">
-                Deslize para o lado <ArrowRight size={12} className="animate-pulse" />
-              </span>
-              <span className="text-[11px] opacity-75">{team.length} membros</span>
-            </div>
-
-            {/* Layout: Horizontal no Mobile (-mx-6 px-6 snap-x) e Grid no Desktop */}
-            <div
-              className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
+          <div
+            className="flex overflow-x-auto sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
               {team.map((person, i) => (
                 <div
                   key={person.id}
@@ -387,7 +366,6 @@ export default function Inicio() {
                   />
                 </div>
               ))}
-            </div>
           </div>
         </section>
       )}

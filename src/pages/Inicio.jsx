@@ -298,6 +298,7 @@ export default function Inicio() {
               >
                 <Link
                   to={`/noticias/${item.id}`}
+                  state={{ from: '/', fromLabel: 'Início' }}
                   className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                 >
                   <div>

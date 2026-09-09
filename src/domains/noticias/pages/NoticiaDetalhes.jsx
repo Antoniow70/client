@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { getNewsById, getNews } from '../services/noticiasApi';
@@ -13,9 +13,14 @@ function formatDate(dateStr) {
 
 export default function NoticiaDetalhes() {
   const { id } = useParams();
+  const location = useLocation();
   const [news, setNews] = useState(null);
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const returnPath = location.state?.from || '/destaques';
+  const returnLabel = location.state?.fromLabel || (returnPath === '/' ? 'Início' : 'Destaques');
+  const backButtonText = returnPath === '/' ? 'Voltar ao Início' : `Voltar a ${returnLabel}`;
 
   useEffect(() => {
     async function load() {
@@ -46,7 +51,7 @@ export default function NoticiaDetalhes() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-6">
         <h2 className="text-2xl font-bold text-brand-bigStone dark:text-dark-text mb-4">Noticia nao encontrada</h2>
-        <Link to="/destaques" className="btn-primary px-6 py-2 text-sm">Voltar a Destaques</Link>
+        <Link to={returnPath} className="btn-primary px-6 py-2 text-sm">{backButtonText}</Link>
       </div>
     );
   }
@@ -74,11 +79,11 @@ export default function NoticiaDetalhes() {
             transition={{ duration: 0.4 }}
           >
             <Link
-              to="/destaques"
+              to={returnPath}
               className="inline-flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white transition-colors uppercase tracking-wider"
             >
               <ArrowLeft size={14} />
-              Voltar a Destaques
+              {backButtonText}
             </Link>
           </motion.div>
 
@@ -163,6 +168,7 @@ export default function NoticiaDetalhes() {
               >
                 <Link
                   to={`/noticias/${item.id}`}
+                  state={{ from: returnPath, fromLabel: returnLabel }}
                   className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
                 >
                   {(item.capa_url || item.capa_data) && (

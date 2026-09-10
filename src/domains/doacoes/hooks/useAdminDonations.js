@@ -8,6 +8,8 @@ import { exportDonationsPDF } from '../../suporte/utils/pdfExport';
 
 export function useAdminDonations(openConfirm, onRefreshAll) {
   const [donations, setDonations] = useState([]);
+  const [donationSearch, setDonationSearch] = useState('');
+  const [donationReadFilter, setDonationReadFilter] = useState('Todos');
   const [donationFilterStart, setDonationFilterStart] = useState('');
   const [donationFilterEnd, setDonationFilterEnd] = useState('');
 
@@ -21,15 +23,37 @@ export function useAdminDonations(openConfirm, onRefreshAll) {
   };
 
   const getFilteredDonations = () => {
-    if (!donationFilterStart && !donationFilterEnd) return donations;
     return donations.filter(d => {
-      if (!d.created_at) return true;
-      const date = new Date(d.created_at);
-      if (isNaN(date.getTime())) return true;
-      const start = donationFilterStart ? new Date(donationFilterStart + 'T00:00:00') : null;
-      const end = donationFilterEnd ? new Date(donationFilterEnd + 'T23:59:59') : null;
-      if (start && date < start) return false;
-      if (end && date > end) return false;
+      // 1. Pesquisa por texto
+      if (donationSearch && donationSearch.trim()) {
+        const q = donationSearch.toLowerCase().trim();
+        const nome = (d.nome || '').toLowerCase();
+        const email = (d.email || '').toLowerCase();
+        const telefone = (d.telefone || '').toLowerCase();
+        const causa = (d.causa || '').toLowerCase();
+        const dataStr = d.created_at ? new Date(d.created_at).toLocaleDateString('pt-PT') : '';
+        const match = nome.includes(q) || email.includes(q) || telefone.includes(q) || causa.includes(q) || dataStr.includes(q);
+        if (!match) return false;
+      }
+
+      // 2. Filtro de Leitura / Estado
+      if (donationReadFilter && donationReadFilter !== 'Todos') {
+        const isRead = d.read_status === 'Lido' || d.status === 'Recebido' || d.status === 'Confirmado' || d.lido === true;
+        if (donationReadFilter === 'Lidos' && !isRead) return false;
+        if (donationReadFilter === 'Nao Lidos' && isRead) return false;
+      }
+
+      // 3. Filtro por período
+      if (donationFilterStart || donationFilterEnd) {
+        if (!d.created_at) return true;
+        const date = new Date(d.created_at);
+        if (isNaN(date.getTime())) return true;
+        const start = donationFilterStart ? new Date(donationFilterStart + 'T00:00:00') : null;
+        const end = donationFilterEnd ? new Date(donationFilterEnd + 'T23:59:59') : null;
+        if (start && date < start) return false;
+        if (end && date > end) return false;
+      }
+
       return true;
     });
   };
@@ -106,6 +130,10 @@ export function useAdminDonations(openConfirm, onRefreshAll) {
   return {
     donations,
     setDonations,
+    donationSearch,
+    setDonationSearch,
+    donationReadFilter,
+    setDonationReadFilter,
     donationFilterStart,
     setDonationFilterStart,
     donationFilterEnd,

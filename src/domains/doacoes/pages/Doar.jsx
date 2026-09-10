@@ -232,9 +232,6 @@ export default function Doar() {
                       className={`form-input ${errors.telefone ? 'border-feedback-error focus:ring-feedback-error/10 focus:border-feedback-error' : ''}`}
                       placeholder="84 123 4567 ou +258..."
                     />
-                    {!errors.telefone && (
-                      <p className="text-[11px] text-brand-slate dark:text-dark-muted font-medium pt-0.5">Contacto para confirmacao ou agradecimento da organizacao.</p>
-                    )}
                     {errors.telefone && <p className="text-feedback-error text-[11px] mt-1">{errors.telefone}</p>}
                   </div>
 

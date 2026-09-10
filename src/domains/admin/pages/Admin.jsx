@@ -370,6 +370,10 @@ export default function Admin() {
         ) : activeTab === 'donations' ? (
           <DonationsTab
             donations={donationsHook.donations}
+            donationSearch={donationsHook.donationSearch}
+            setDonationSearch={donationsHook.setDonationSearch}
+            donationReadFilter={donationsHook.donationReadFilter}
+            setDonationReadFilter={donationsHook.setDonationReadFilter}
             donationFilterStart={donationsHook.donationFilterStart}
             setDonationFilterStart={donationsHook.setDonationFilterStart}
             donationFilterEnd={donationsHook.donationFilterEnd}

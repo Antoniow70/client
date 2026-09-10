@@ -6,6 +6,10 @@ import { Filter, TrendingUp, Download, Users, Heart, Handshake, Smartphone } fro
  */
 export default function DonationsTab({
   donations,
+  donationSearch = '',
+  setDonationSearch = () => {},
+  donationReadFilter = 'Todos',
+  setDonationReadFilter = () => {},
   donationFilterStart,
   setDonationFilterStart,
   donationFilterEnd,
@@ -30,51 +34,60 @@ export default function DonationsTab({
       {/* Filter Bar */}
       <div className="card-surface p-5">
         <div className="flex flex-wrap items-end gap-4">
-          <div className="flex items-center gap-2 text-brand-eastBay dark:text-dark-text font-bold text-sm mb-1 sm:mb-0">
-            <Filter size={16} className="text-brand-horizon" />
-            <span>Filtrar por periodo</span>
+          <div className="flex flex-col gap-1 w-full max-w-xs">
+            <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5">Pesquisar</label>
+            <input
+              type="text"
+              value={donationSearch}
+              onChange={e => setDonationSearch(e.target.value)}
+              placeholder="Nome, email ou data..."
+              className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text placeholder-slate-400 dark:placeholder-dark-muted focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all w-full"
+            />
           </div>
-          <div className="flex flex-wrap gap-4 flex-1">
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5 block">Data Inicio</label>
-              <input
-                type="date"
-                value={donationFilterStart}
-                onChange={e => setDonationFilterStart(e.target.value)}
-                className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5 block">Data Fim</label>
-              <input
-                type="date"
-                value={donationFilterEnd}
-                onChange={e => setDonationFilterEnd(e.target.value)}
-                className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all"
-              />
-            </div>
-            {(donationFilterStart || donationFilterEnd) && (
-              <button
-                onClick={() => { setDonationFilterStart(''); setDonationFilterEnd(''); }}
-                className="px-3 py-1.5 text-xs font-semibold text-brand-eastBay dark:text-dark-muted hover:text-brand-eastBay dark:text-dark-text border border-slate-200 rounded-lg hover:bg-brand-poloBlue/15 transition-all self-end"
-              >
-                Limpar
-              </button>
-            )}
+          <div className="flex flex-col gap-1">
+            <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5">Leitura</label>
+            <select
+              value={donationReadFilter}
+              onChange={e => setDonationReadFilter(e.target.value)}
+              className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all cursor-pointer"
+            >
+              <option value="Todos">Todos</option>
+              <option value="Lidos">Lidos</option>
+              <option value="Nao Lidos">Nao Lidos</option>
+            </select>
           </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5">Data Inicio</label>
+            <input
+              type="date"
+              value={donationFilterStart}
+              onChange={e => setDonationFilterStart(e.target.value)}
+              className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider mb-1.5">Data Fim</label>
+            <input
+              type="date"
+              value={donationFilterEnd}
+              onChange={e => setDonationFilterEnd(e.target.value)}
+              className="bg-brand-poloBlue/15 border border-slate-200 dark:border-dark-muted/20 rounded-lg px-3 py-1.5 text-xs text-brand-bigStone dark:text-dark-text focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all"
+            />
+          </div>
+          {(donationSearch || donationFilterStart || donationFilterEnd || donationReadFilter !== 'Todos') && (
+            <button
+              onClick={() => { setDonationSearch(''); setDonationFilterStart(''); setDonationFilterEnd(''); setDonationReadFilter('Todos'); }}
+              className="px-3 py-1.5 text-xs font-semibold text-brand-eastBay dark:text-dark-muted hover:text-brand-eastBay dark:text-dark-text border border-slate-200 dark:border-dark-muted/25 rounded-lg hover:bg-brand-poloBlue/15 transition-all"
+            >
+              Limpar
+            </button>
+          )}
           <div className="flex gap-2 ml-auto">
             <button
-              onClick={fetchData}
-              className="btn-secondary py-2 px-3 text-xs flex items-center gap-1.5"
-              title="Atualizar lista de doadores"
-            >
-              <TrendingUp size={14} /> Atualizar
-            </button>
-            <button
               onClick={exportDonationsPDF}
-              className="btn-primary py-2 px-4 text-xs flex items-center gap-1.5"
+              className="btn-primary py-2.5 px-4 text-xs"
             >
-              <Download size={14} /> Exportar PDF
+              <Download size={16} /> Exportar PDF
             </button>
           </div>
         </div>

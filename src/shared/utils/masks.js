@@ -1,14 +1,14 @@
 /**
- * Máscaras interativas de formatação de inputs para o Frontend da plataforma ALEM.
- * Permitem formatação visual em tempo real no evento onChange.
+ * Mascaras interativas de formatacao de inputs para o Frontend da plataforma ALEM.
+ * Permitem formatacao visual em tempo real no evento onChange.
  */
 
 import { cleanDigits } from './sanitizers';
 
 /**
- * Aplica máscara de telefone (Moçambique ou Internacional).
+ * Aplica mascara de telefone (Mocambique ou Internacional).
  * Formatos resultantes:
- * - Local MZ (9 dígitos): "84 123 4567"
+ * - Local MZ (9 digitos): "84 123 4567"
  * - Prefixo MZ (+258): "+258 84 123 4567"
  * - Internacional geral: "+XXX XXX XXX..."
  * @param {string} value
@@ -20,9 +20,9 @@ export function maskPhone(value) {
   const isPlus = trimmed.startsWith('+');
   const digits = cleanDigits(value);
 
-  // Se começou com 258 (com ou sem +)
+  // Se comecou com 258 (com ou sem +)
   if (digits.startsWith('258')) {
-    const local = digits.slice(3, 12); // até 9 dígitos locais
+    const local = digits.slice(3, 12); // ate 9 digitos locais
     let result = '+258';
     if (local.length > 0) result += ' ' + local.slice(0, 2);
     if (local.length > 2) result += ' ' + local.slice(2, 5);
@@ -30,7 +30,7 @@ export function maskPhone(value) {
     return result;
   }
 
-  // Se começou com sinal de '+' mas não é 258 (Internacional)
+  // Se comecou com sinal de '+' mas nao e 258 (Internacional)
   if (isPlus) {
     const limited = digits.slice(0, 15);
     let result = '+';
@@ -41,7 +41,7 @@ export function maskPhone(value) {
     return result;
   }
 
-  // Padrão nacional de Moçambique: 9 dígitos ("84 123 4567")
+  // Padrao nacional de Mocambique: 9 digitos ("84 123 4567")
   const limited = digits.slice(0, 9);
   if (limited.length <= 2) return limited;
   if (limited.length <= 5) return `${limited.slice(0, 2)} ${limited.slice(2)}`;
@@ -49,7 +49,7 @@ export function maskPhone(value) {
 }
 
 /**
- * Aplica máscara em código OTP / recuperação (agrupamento ergonómico de dígitos).
+ * Aplica mascara em codigo OTP / recuperacao (agrupamento ergonomico de digitos).
  * Ex: "12345678" -> "1234 5678"
  * @param {string} value
  * @param {number} [maxLength=8]
@@ -63,7 +63,7 @@ export function maskOtp(value, maxLength = 8) {
 }
 
 /**
- * Formata valores numéricos para moeda em Meticais (MT).
+ * Formata valores numericos para moeda em Meticais (MT).
  * Ex: 1000 -> "1 000 MT" ou "1 500,00 MT"
  * @param {number|string} value
  * @param {object} [options]
@@ -81,13 +81,13 @@ export function maskCurrencyMZN(value, { withDecimals = false, withSuffix = true
     maximumFractionDigits: withDecimals ? 2 : 2
   }).format(num);
 
-  // Substitui separador de milhar por espaço limpo
+  // Substitui separador de milhar por espaco limpo
   const cleanFormatted = formatted.replace(/\u00A0/g, ' ');
   return withSuffix ? `${cleanFormatted} MT` : cleanFormatted;
 }
 
 /**
- * Aplica máscara em NIB moçambicano (21 dígitos agrupados em blocos de 4).
+ * Aplica mascara em NIB mocambicano (21 digitos agrupados em blocos de 4).
  * Ex: "0001 0002 0003 0004 0005 1"
  * @param {string} value
  * @returns {string}
@@ -103,7 +103,7 @@ export function maskNIB(value) {
 }
 
 /**
- * Aplica máscara em data DD/MM/AAAA enquanto o utilizador digita.
+ * Aplica mascara em data DD/MM/AAAA enquanto o utilizador digita.
  * @param {string} value
  * @returns {string}
  */
@@ -116,7 +116,7 @@ export function maskDate(value) {
 }
 
 /**
- * Remove formatação visual de uma string preservando apenas o valor canónico.
+ * Remove formatacao visual de uma string preservando apenas o valor canonico.
  * @param {string} value
  * @returns {string}
  */

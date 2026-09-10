@@ -19,8 +19,8 @@ export default function NoticiaDetalhes() {
   const [loading, setLoading] = useState(true);
 
   const returnPath = location.state?.from || '/destaques';
-  const returnLabel = location.state?.fromLabel || (returnPath === '/' ? 'Início' : 'Destaques');
-  const backButtonText = returnPath === '/' ? 'Voltar ao Início' : `Voltar a ${returnLabel}`;
+  const returnLabel = location.state?.fromLabel || (returnPath === '/' ? 'Inicio' : 'Destaques');
+  const backButtonText = returnPath === '/' ? 'Voltar ao Inicio' : `Voltar a ${returnLabel}`;
   const navigate = useNavigate();
 
   const handleGoBack = () => {

@@ -17,7 +17,7 @@ export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Estados de validação OTP
+  // Estados de validacao OTP
   const [emailInput, setEmailInput] = useState(searchParams.get('email') || '');
   const [otpCode, setOtpCode] = useState('');
 
@@ -34,7 +34,7 @@ export default function ResetPassword() {
     let mounted = true;
 
     const initAuth = async () => {
-      // 1. Extrai parâmetros da URL (Query e Hash)
+      // 1. Extrai parametros da URL (Query e Hash)
       const tokenHash = searchParams.get('token_hash');
       const code = searchParams.get('code');
       const emailParam = searchParams.get('email');
@@ -52,7 +52,7 @@ export default function ResetPassword() {
         if (mounted) {
           setError(
             decoded.includes('expired') || decoded.includes('invalid')
-              ? 'O link de e-mail expirou ou foi inspecionado pelo servidor de e-mail. Utilize o código de 8 dígitos abaixo ou solicite um novo link.'
+              ? 'O link de e-mail expirou ou foi inspecionado pelo servidor de e-mail. Utilize o codigo de 8 digitos abaixo ou solicite um novo link.'
               : decoded
           );
         }
@@ -65,20 +65,20 @@ export default function ResetPassword() {
           if (data?.session && mounted) {
             setHasValidSession(true);
             setError('');
-            // Limpa parâmetros da URL para segurança e evitar repetição
+            // Limpa parametros da URL para seguranca e evitar repeticao
             window.history.replaceState({}, document.title, window.location.pathname);
             setCheckingSession(false);
             return;
           }
         } catch (verifyErr) {
-          console.warn('Falha na validação automática do token_hash:', verifyErr.message);
+          console.warn('Falha na validacao automatica do token_hash:', verifyErr.message);
           if (mounted) {
-            setError('O link de recuperação expirou ou já foi utilizado. Por favor, introduza o código de 8 dígitos enviado para o seu e-mail.');
+            setError('O link de recuperacao expirou ou ja foi utilizado. Por favor, introduza o codigo de 8 digitos enviado para o seu e-mail.');
           }
         }
       }
 
-      // 3. Se houver código PKCE
+      // 3. Se houver codigo PKCE
       if (code) {
         try {
           const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
@@ -90,18 +90,18 @@ export default function ResetPassword() {
             return;
           }
         } catch (err) {
-          console.warn('Erro ao trocar código por sessão:', err);
+          console.warn('Erro ao trocar codigo por sessao:', err);
         }
       }
 
-      // 4. Verifica sessão já ativa ou token em memória
+      // 4. Verifica sessao ja ativa ou token em memoria
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session && mounted) {
           setHasValidSession(true);
         }
       } catch (err) {
-        console.error('Erro ao verificar sessão:', err);
+        console.error('Erro ao verificar sessao:', err);
       } finally {
         if (mounted) {
           setCheckingSession(false);
@@ -109,7 +109,7 @@ export default function ResetPassword() {
       }
     };
 
-    // Observa mudanças de estado de autenticação (ex: recuperação de senha)
+    // Observa mudancas de estado de autenticacao (ex: recuperacao de senha)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session && mounted) {
         setHasValidSession(true);
@@ -125,7 +125,7 @@ export default function ResetPassword() {
     };
   }, [searchParams]);
 
-  // Validação manual de OTP de 8 dígitos
+  // Validacao manual de OTP de 8 digitos
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     const cleanEmail = normalizeEmail(emailInput);
@@ -140,7 +140,7 @@ export default function ResetPassword() {
     }
 
     if (cleanOtp.length < 6) {
-      setError('Por favor, introduza o código de verificação recebido por e-mail.');
+      setError('Por favor, introduza o codigo de verificacao recebido por e-mail.');
       return;
     }
 
@@ -158,18 +158,18 @@ export default function ResetPassword() {
         setHasValidSession(true);
         setError('');
       } else {
-        setError('Não foi possível estabelecer sessão. Verifique o código e tente novamente.');
+        setError('Nao foi possivel estabelecer sessao. Verifique o codigo e tente novamente.');
       }
     } catch (err) {
-      console.error('Erro ao validar código OTP:', err);
-      const msg = err.message || 'Código de verificação inválido ou expirado. Verifique os 8 dígitos.';
+      console.error('Erro ao validar codigo OTP:', err);
+      const msg = err.message || 'Codigo de verificacao invalido ou expirado. Verifique os 8 digitos.';
       setError(msg);
     } finally {
       setLoading(false);
     }
   };
 
-  // Reenviar e-mail de recuperação
+  // Reenviar e-mail de recuperacao
   const handleResend = async () => {
     const cleanEmail = normalizeEmail(emailInput);
     if (!cleanEmail) {
@@ -189,16 +189,16 @@ export default function ResetPassword() {
 
     try {
       const res = await requestPasswordRecovery(cleanEmail);
-      setResendSuccess(res.message || 'Novo link e código de recuperação enviados com sucesso!');
+      setResendSuccess(res.message || 'Novo link e codigo de recuperacao enviados com sucesso!');
     } catch (err) {
-      console.error('Erro ao reenviar recuperação:', err);
+      console.error('Erro ao reenviar recuperacao:', err);
       setError(err.message || 'Falha ao reenviar e-mail. Tente novamente em instantes.');
     } finally {
       setResending(false);
     }
   };
 
-  // Submissão da nova palavra-passe
+  // Submissao da nova palavra-passe
   const handleReset = async (e) => {
     e.preventDefault();
     setError('');
@@ -209,7 +209,7 @@ export default function ResetPassword() {
     }
 
     if (password !== confirmPassword) {
-      setError('As palavras-passe não coincidem.');
+      setError('As palavras-passe nao coincidem.');
       return;
     }
 
@@ -223,7 +223,7 @@ export default function ResetPassword() {
       }, 3000);
     } catch (err) {
       console.error('Erro ao atualizar palavra-passe:', err);
-      setError(err.message || 'Falha ao redefinir palavra-passe. A sessão pode ter expirado.');
+      setError(err.message || 'Falha ao redefinir palavra-passe. A sessao pode ter expirado.');
     } finally {
       setLoading(false);
     }
@@ -236,7 +236,7 @@ export default function ResetPassword() {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="bg-white/90 dark:bg-dark-surface/90 backdrop-blur-md p-8 rounded-2xl border border-slate-200/80 dark:border-dark-muted/15 shadow-xl shadow-slate-200/30 dark:shadow-black/20 w-full max-w-md space-y-6"
       >
-        {/* Cabeçalho */}
+        {/* Cabecalho */}
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-4">
             <img
@@ -255,11 +255,11 @@ export default function ResetPassword() {
           </p>
         </div>
 
-        {/* 1. Loading inicial de validação */}
+        {/* 1. Loading inicial de validacao */}
         {checkingSession ? (
           <div className="py-8 flex flex-col items-center justify-center gap-3">
             <Loader2 size={32} className="animate-spin text-green-600" />
-            <span className="text-xs text-slate-500 font-medium">A validar sessão de recuperação...</span>
+            <span className="text-xs text-slate-500 font-medium">A validar sessao de recuperacao...</span>
           </div>
         ) : success ? (
           /* 2. Tela de Sucesso */
@@ -283,7 +283,7 @@ export default function ResetPassword() {
             </button>
           </div>
         ) : hasValidSession ? (
-          /* 3. Formulário de Nova Palavra-passe (Sessão Válida) */
+          /* 3. Formulario de Nova Palavra-passe (Sessao Valida) */
           <form onSubmit={handleReset} className="space-y-4">
             {error && (
               <div className="flex items-center gap-2 bg-feedback-errorLight dark:bg-feedback-error/10 border border-feedback-errorBorder dark:border-feedback-error/25 text-feedback-error text-xs px-4 py-3 rounded-xl">
@@ -300,7 +300,7 @@ export default function ResetPassword() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="form-input pr-10"
-                  placeholder="Mínimo de 6 a 8 caracteres"
+                  placeholder="Minimo de 6 a 8 caracteres"
                   required
                   disabled={loading}
                   autoFocus
@@ -348,7 +348,7 @@ export default function ResetPassword() {
                   ) : (
                     <span className="text-rose-500 dark:text-rose-400 flex items-center gap-1 font-medium">
                       <AlertCircle size={13} />
-                      As palavras-passe não coincidem
+                      As palavras-passe nao coincidem
                     </span>
                   )}
                 </div>
@@ -382,7 +382,7 @@ export default function ResetPassword() {
             </div>
           </form>
         ) : (
-          /* 4. Formulário de Validação de Código OTP (Quando o link expirou ou foi pré-clicado) */
+          /* 4. Formulario de Validacao de Codigo OTP (Quando o link expirou ou foi pre-clicado) */
           <div className="space-y-4">
             {error && (
               <div className="flex items-start gap-2.5 bg-feedback-errorLight dark:bg-feedback-error/10 border border-feedback-errorBorder dark:border-feedback-error/25 text-feedback-error text-xs px-4 py-3 rounded-xl leading-relaxed">
@@ -421,7 +421,7 @@ export default function ResetPassword() {
 
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="form-label">Código de Segurança (8 Dígitos)</label>
+                  <label className="form-label">Codigo de Seguranca (8 Digitos)</label>
                   <span className="text-[11px] text-slate-400">Verifique o seu e-mail</span>
                 </div>
                 <div className="relative">
@@ -452,10 +452,10 @@ export default function ResetPassword() {
                 {loading ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
-                    A validar código...
+                    A validar codigo...
                   </>
                 ) : (
-                  'Validar Código e Prosseguir'
+                  'Validar Codigo e Prosseguir'
                 )}
               </button>
             </form>
@@ -468,7 +468,7 @@ export default function ResetPassword() {
                 className="w-full text-xs font-semibold text-green-700 dark:text-green-400 hover:underline flex items-center justify-center gap-1.5 py-1.5 disabled:opacity-50 cursor-pointer"
               >
                 <RefreshCw size={13} className={resending ? 'animate-spin' : ''} />
-                {resending ? 'A enviar novo código...' : 'Reenviar código para o e-mail'}
+                {resending ? 'A enviar novo codigo...' : 'Reenviar codigo para o e-mail'}
               </button>
 
               <div className="text-center">

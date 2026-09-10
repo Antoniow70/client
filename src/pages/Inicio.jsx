@@ -341,7 +341,7 @@ export default function Inicio() {
                 className="h-full"
               >
                 <div
-                  onClick={() => handleCardClick(`/noticias/${item.id}`, { from: '/', fromLabel: 'Início' })}
+                  onClick={() => handleCardClick(`/noticias/${item.id}`, { from: '/', fromLabel: 'Inicio' })}
                   className="cursor-pointer group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                 >
                   <div>

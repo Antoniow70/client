@@ -53,7 +53,7 @@ export async function getCurrentSession() {
 }
 
 /**
- * Solicita recuperação de palavra-passe pelo backend (Supabase Admin + E-mail Institucional com OTP)
+ * Solicita recuperacao de palavra-passe pelo backend (Supabase Admin + E-mail Institucional com OTP)
  * @param {string} email
  * @returns {Promise<object>}
  */
@@ -62,7 +62,7 @@ export async function requestPasswordRecovery(email) {
     const response = await axiosClient.post('/auth/forgot-password', { email });
     return response.data;
   } catch (backendErr) {
-    console.warn('⚠️ Falha ao solicitar recuperação via backend, tentando direto pelo Supabase Auth:', backendErr);
+    console.warn('⚠️ Falha ao solicitar recuperacao via backend, tentando direto pelo Supabase Auth:', backendErr);
     const redirectTo = `${window.location.origin}/admin/recuperar-senha`;
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo
@@ -70,17 +70,17 @@ export async function requestPasswordRecovery(email) {
     if (error) throw error;
     return {
       success: true,
-      message: 'Link de recuperação enviado pelo Supabase! Verifique a sua caixa de entrada.'
+      message: 'Link de recuperacao enviado pelo Supabase! Verifique a sua caixa de entrada.'
     };
   }
 }
 
 /**
- * Valida o token_hash ou o código OTP para recuperação de palavra-passe
+ * Valida o token_hash ou o codigo OTP para recuperacao de palavra-passe
  * @param {object} params
  * @param {string} [params.token_hash] - Hash do token direto
  * @param {string} [params.email] - E-mail do utilizador
- * @param {string} [params.token] - Código OTP numérico (ex: 8 dígitos)
+ * @param {string} [params.token] - Codigo OTP numerico (ex: 8 digitos)
  * @returns {Promise<object>}
  */
 export async function verifyRecoveryOtp({ token_hash, email, token }) {
@@ -97,7 +97,7 @@ export async function verifyRecoveryOtp({ token_hash, email, token }) {
       type: 'recovery'
     });
   } else {
-    throw new Error('Parâmetros de verificação inválidos. Forneça o token ou o código.');
+    throw new Error('Parametros de verificacao invalidos. Forneca o token ou o codigo.');
   }
 
   if (result.error) throw result.error;
@@ -110,7 +110,7 @@ export async function verifyRecoveryOtp({ token_hash, email, token }) {
 }
 
 /**
- * Atualiza a palavra-passe do utilizador usando o token de recuperação ou sessão ativa
+ * Atualiza a palavra-passe do utilizador usando o token de recuperacao ou sessao ativa
  * @param {string} newPassword
  * @returns {Promise<object>}
  */
@@ -120,7 +120,7 @@ export async function updateUserPassword(newPassword) {
   });
 
   if (error) {
-    // Fallback defensivo via backend caso tenhamos sessão ativa no interceptor
+    // Fallback defensivo via backend caso tenhamos sessao ativa no interceptor
     try {
       const response = await axiosClient.post('/auth/reset-password', { password: newPassword });
       return response.data;

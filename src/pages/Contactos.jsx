@@ -25,12 +25,12 @@ const contactSchema = z.object({
     .string()
     .trim()
     .min(3, 'Nome completo deve ter pelo menos 3 caracteres')
-    .regex(REGEX_NAME, 'Nome deve conter apenas letras e espaços'),
+    .regex(REGEX_NAME, 'Nome deve conter apenas letras e espacos'),
   email: z
     .string()
     .trim()
     .transform((val) => (val ? val.toLowerCase() : ''))
-    .refine((val) => !val || REGEX_EMAIL.test(val), 'Endereço de e-mail inválido')
+    .refine((val) => !val || REGEX_EMAIL.test(val), 'Endereco de e-mail invalido')
     .optional()
     .or(z.literal('')),
   phone: z
@@ -39,17 +39,17 @@ const contactSchema = z.object({
     .refine((val) => {
       const cleaned = cleanPhone(val);
       return REGEX_PHONE_MZ.test(cleaned) || REGEX_PHONE_INTL.test(cleaned);
-    }, 'Telefone inválido (9 dígitos para Moçambique ou formato internacional com +)'),
-  gender: z.string().min(1, 'Género é obrigatório'),
+    }, 'Telefone invalido (9 digitos para Mocambique ou formato internacional com +)'),
+  gender: z.string().min(1, 'Genero e obrigatorio'),
   birthDate: z
     .string()
-    .min(1, 'Data de nascimento é obrigatória')
+    .min(1, 'Data de nascimento e obrigatoria')
     .refine((val) => {
       const d = new Date(val);
       return !isNaN(d.getTime()) && d <= new Date();
-    }, 'A data de nascimento não pode ser no futuro'),
-  address: z.string().trim().min(3, 'Endereço muito curto'),
-  subject: z.string().trim().min(2, 'Tipo de apoio/assunto obrigatório'),
+    }, 'A data de nascimento nao pode ser no futuro'),
+  address: z.string().trim().min(3, 'Endereco muito curto'),
+  subject: z.string().trim().min(2, 'Tipo de apoio/assunto obrigatorio'),
   message: z.string().trim().min(5, 'Mensagem deve ter pelo menos 5 caracteres'),
 });
 
@@ -58,22 +58,22 @@ const volunteerSchema = z.object({
     .string()
     .trim()
     .min(3, 'Nome completo deve ter pelo menos 3 caracteres')
-    .regex(REGEX_NAME, 'Nome deve conter apenas letras e espaços'),
+    .regex(REGEX_NAME, 'Nome deve conter apenas letras e espacos'),
   email: z
     .string()
     .trim()
     .transform((val) => val.toLowerCase())
-    .pipe(z.string().regex(REGEX_EMAIL, 'Endereço de e-mail inválido')),
+    .pipe(z.string().regex(REGEX_EMAIL, 'Endereco de e-mail invalido')),
   phone: z
     .string()
     .trim()
     .refine((val) => {
       const cleaned = cleanPhone(val);
       return REGEX_PHONE_MZ.test(cleaned) || REGEX_PHONE_INTL.test(cleaned);
-    }, 'Telefone inválido (9 dígitos para Moçambique ou formato internacional com +)'),
-  gender: z.string().min(1, 'Género é obrigatório'),
-  address: z.string().trim().min(3, 'Endereço muito curto'),
-  interestArea: z.string().trim().min(2, 'Área de interesse obrigatória'),
+    }, 'Telefone invalido (9 digitos para Mocambique ou formato internacional com +)'),
+  gender: z.string().min(1, 'Genero e obrigatorio'),
+  address: z.string().trim().min(3, 'Endereco muito curto'),
+  interestArea: z.string().trim().min(2, 'Area de interesse obrigatoria'),
   activityId: z.string().min(1, 'Selecione uma atividade de interesse'),
   message: z.string().optional(),
 });

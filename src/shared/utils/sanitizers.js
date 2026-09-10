@@ -1,9 +1,9 @@
 /**
- * Funções de sanitização e normalização de dados para o Frontend da plataforma ALEM.
+ * Funcoes de sanitizacao e normalizacao de dados para o Frontend da plataforma ALEM.
  */
 
 /**
- * Remove espaços em branco nas pontas e comprime múltiplos espaços internos num único.
+ * Remove espacos em branco nas pontas e comprime multiplos espacos internos num unico.
  * @param {string} str
  * @returns {string}
  */
@@ -13,7 +13,7 @@ export function cleanString(str) {
 }
 
 /**
- * Normaliza endereço de e-mail (remove espaços e converte para minúsculas).
+ * Normaliza endereco de e-mail (remove espacos e converte para minusculas).
  * @param {string} email
  * @returns {string}
  */
@@ -23,7 +23,7 @@ export function normalizeEmail(email) {
 }
 
 /**
- * Mantém apenas dígitos numéricos (0-9).
+ * Mantem apenas digitos numericos (0-9).
  * @param {string|number} value
  * @returns {string}
  */
@@ -33,7 +33,7 @@ export function cleanDigits(value) {
 }
 
 /**
- * Limpa número de telefone mantendo dígitos e o sinal de '+' inicial se existir.
+ * Limpa numero de telefone mantendo digitos e o sinal de '+' inicial se existir.
  * @param {string} phone
  * @returns {string}
  */
@@ -46,8 +46,8 @@ export function cleanPhone(phone) {
 }
 
 /**
- * Converte nomes para Title Case (primeira letra de cada palavra maiúscula),
- * preservando conectivos comuns em português em minúsculas (de, da, do, das, dos, e).
+ * Converte nomes para Title Case (primeira letra de cada palavra maiuscula),
+ * preservando conectivos comuns em portugues em minusculas (de, da, do, das, dos, e).
  * @param {string} str
  * @returns {string}
  */
@@ -67,24 +67,24 @@ export function formatTitleCase(str) {
 }
 
 /**
- * Converte string formatada monetária (ex: "1.500 MT" ou "250,50") para número float puro.
+ * Converte string formatada monetaria (ex: "1.500 MT" ou "250,50") para numero float puro.
  * @param {string|number} value
  * @returns {number}
  */
 export function parseCurrency(value) {
   if (typeof value === 'number') return isNaN(value) ? 0 : value;
   if (!value) return 0;
-  // Remove MT, espaços, etc.
+  // Remove MT, espacos, etc.
   const cleaned = String(value)
     .replace(/[^\d,.-]/g, '')
     .replace(/\./g, '') // remove separador de milhar
-    .replace(',', '.'); // ajusta vírgula decimal
+    .replace(',', '.'); // ajusta virgula decimal
   const num = parseFloat(cleaned);
   return isNaN(num) ? 0 : num;
 }
 
 /**
- * Sanitiza texto simples contra injeção de HTML/scripts.
+ * Sanitiza texto simples contra injecao de HTML/scripts.
  * @param {string} str
  * @returns {string}
  */

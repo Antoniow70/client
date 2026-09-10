@@ -101,7 +101,7 @@ export default function Doar() {
     if (formData.valor) {
       const num = parseFloat(formData.valor);
       if (isNaN(num) || num <= 0) {
-        newErrors.valor = 'Introduza um valor válido superior a zero.';
+        newErrors.valor = 'Introduza um valor valido superior a zero.';
       }
     }
 
@@ -247,10 +247,10 @@ export default function Doar() {
                       placeholder="84 123 4567 ou +258..."
                     />
                     {formData.metodoPagamento === 'mpesa' && !errors.telefone && (
-                      <p className="text-[11px] text-rose-500 font-medium pt-0.5">Para M-Pesa, utilize um número Vodacom (84 ou 85).</p>
+                      <p className="text-[11px] text-rose-500 font-medium pt-0.5">Para M-Pesa, utilize um numero Vodacom (84 ou 85).</p>
                     )}
                     {formData.metodoPagamento === 'emola' && !errors.telefone && (
-                      <p className="text-[11px] text-orange-500 font-medium pt-0.5">Para E-Mola, utilize um número Movitel (86 ou 87).</p>
+                      <p className="text-[11px] text-orange-500 font-medium pt-0.5">Para E-Mola, utilize um numero Movitel (86 ou 87).</p>
                     )}
                     {errors.telefone && <p className="text-feedback-error text-[11px] mt-1">{errors.telefone}</p>}
                   </div>
@@ -275,10 +275,10 @@ export default function Doar() {
                     {errors.causa && <p className="text-feedback-error text-[11px] mt-1">{errors.causa}</p>}
                   </div>
 
-                  {/* Valor da Contribuição */}
+                  {/* Valor da Contribuicao */}
                   <div className="space-y-2 md:col-span-2">
                     <div className="flex items-center justify-between">
-                      <label className="form-label !text-brand-bigStone dark:!text-dark-text">Valor da Contribuição (MT)</label>
+                      <label className="form-label !text-brand-bigStone dark:!text-dark-text">Valor da Contribuicao (MT)</label>
                       <span className="text-[11px] text-slate-400">Opcional no registo (MZN)</span>
                     </div>
                     <div className="relative">
@@ -299,7 +299,7 @@ export default function Doar() {
 
                     {/* Quick Amount Chips */}
                     <div className="flex items-center gap-2 flex-wrap pt-1">
-                      <span className="text-[11px] text-slate-500 font-medium">Sugestões rápidas:</span>
+                      <span className="text-[11px] text-slate-500 font-medium">Sugestoes rapidas:</span>
                       {quickAmounts.map((amt) => (
                         <button
                           key={amt}

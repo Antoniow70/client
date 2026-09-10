@@ -31,7 +31,7 @@ export function useAdminVolunteers(openConfirm, onRefreshAll) {
     try {
       const currentVol = volunteers.find(v => v.id === id);
       if (currentVol && currentVol.status === 'Aprovado' && newStatus === 'Pendente') {
-        alert('Não é permitido reverter uma candidatura já aprovada para pendente.');
+        alert('Nao e permitido reverter uma candidatura ja aprovada para pendente.');
         return;
       }
       if (newStatus === 'Recusado') {

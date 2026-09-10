@@ -25,7 +25,7 @@ export default function AdminLogin({ email, setEmail, password, setPassword, han
             />
           </div>
           <h1 className="text-2xl font-bold text-brand-bigStone dark:text-white tracking-tight">Admin ALEM</h1>
-          <p className="text-sm text-brand-eastBay dark:text-dark-muted">Acesso restrito à equipa de gestão</p>
+          <p className="text-sm text-brand-eastBay dark:text-dark-muted">Acesso restrito a equipa de gestao</p>
         </div>
 
         {loginError && (

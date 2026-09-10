@@ -16,7 +16,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
     e.preventDefault();
     const cleanEmail = normalizeEmail(email);
     if (!cleanEmail) {
-      setError('Por favor, introduza o seu endereço de e-mail.');
+      setError('Por favor, introduza o seu endereco de e-mail.');
       return;
     }
 
@@ -32,9 +32,9 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
 
     try {
       const res = await requestPasswordRecovery(cleanEmail);
-      setSuccess(res.message || 'Se o endereço estiver registado, receberá um link de recuperação por e-mail.');
+      setSuccess(res.message || 'Se o endereco estiver registado, recebera um link de recuperacao por e-mail.');
     } catch (err) {
-      console.error('Erro ao solicitar recuperação:', err);
+      console.error('Erro ao solicitar recuperacao:', err);
       const msg = err.message || err.response?.data?.message || 'Ocorreu um erro ao processar o pedido. Tente novamente.';
       setError(msg);
     } finally {
@@ -92,7 +92,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
                   </div>
                   <div className="space-y-1">
                     <h3 className="font-bold text-brand-bigStone dark:text-dark-text text-base">
-                      Instruções Enviadas!
+                      Instrucoes Enviadas!
                     </h3>
                     <p className="text-xs text-brand-eastBay dark:text-dark-muted leading-relaxed px-2">
                       {success}
@@ -107,7 +107,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
                       className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 text-xs transition-colors shadow-sm cursor-pointer"
                     >
                       <KeyRound size={14} />
-                      Já recebi o código (Inserir agora)
+                      Ja recebi o codigo (Inserir agora)
                     </button>
                     <button
                       onClick={handleClose}
@@ -120,7 +120,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <p className="text-xs text-brand-eastBay dark:text-dark-muted leading-relaxed">
-                    Introduza o e-mail da sua conta de administrador. Enviaremos um link de recuperação para definir uma nova palavra-passe.
+                    Introduza o e-mail da sua conta de administrador. Enviaremos um link de recuperacao para definir uma nova palavra-passe.
                   </p>
 
                   {error && (
@@ -171,7 +171,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, initialEmail = ''
                           A enviar...
                         </>
                       ) : (
-                        'Enviar Link de Recuperação'
+                        'Enviar Link de Recuperacao'
                       )}
                     </button>
                   </div>

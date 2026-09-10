@@ -4,12 +4,12 @@ import { Check, X, Shield, ShieldCheck } from 'lucide-react';
 import { evaluatePasswordStrength } from '../utils/validators';
 
 /**
- * Componente visual de medidor de força e segurança da palavra-passe.
- * Exibe barra de progresso em 4 segmentos e checklist dinâmico de critérios.
+ * Componente visual de medidor de forca e seguranca da palavra-passe.
+ * Exibe barra de progresso em 4 segmentos e checklist dinamico de criterios.
  *
  * @param {object} props
  * @param {string} props.password Palavra-passe a ser avaliada
- * @param {boolean} [props.showCriteria=true] Se deve exibir o checklist de critérios
+ * @param {boolean} [props.showCriteria=true] Se deve exibir o checklist de criterios
  * @param {string} [props.className=''] Classes CSS adicionais
  */
 export default function PasswordStrengthMeter({ password = '', showCriteria = true, className = '' }) {
@@ -22,15 +22,15 @@ export default function PasswordStrengthMeter({ password = '', showCriteria = tr
   const { score, label, colorBg, colorText, checks } = analysis;
 
   const criteriaList = [
-    { key: 'hasMinLength', text: 'Mínimo de 8 caracteres', pass: checks.hasMinLength },
-    { key: 'hasCase', text: 'Letras maiúscula e minúscula', pass: checks.hasLower && checks.hasUpper },
-    { key: 'hasNumber', text: 'Pelo menos 1 número', pass: checks.hasNumber },
+    { key: 'hasMinLength', text: 'Minimo de 8 caracteres', pass: checks.hasMinLength },
+    { key: 'hasCase', text: 'Letras maiuscula e minuscula', pass: checks.hasLower && checks.hasUpper },
+    { key: 'hasNumber', text: 'Pelo menos 1 numero', pass: checks.hasNumber },
     { key: 'hasSpecial', text: 'Caractere especial (!@#$...)', pass: checks.hasSpecial }
   ];
 
   return (
     <div className={`space-y-2.5 pt-1.5 ${className}`}>
-      {/* Cabeçalho da força */}
+      {/* Cabecalho da forca */}
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center gap-1.5 text-slate-500 dark:text-dark-muted">
           {score >= 3 ? (
@@ -38,14 +38,14 @@ export default function PasswordStrengthMeter({ password = '', showCriteria = tr
           ) : (
             <Shield size={14} className="shrink-0" />
           )}
-          <span>Segurança:</span>
+          <span>Seguranca:</span>
         </div>
         <span className={`font-semibold ${colorText} transition-colors duration-200`}>
           {label}
         </span>
       </div>
 
-      {/* Barra de progresso segmentada em 4 níveis */}
+      {/* Barra de progresso segmentada em 4 niveis */}
       <div className="grid grid-cols-4 gap-1.5 h-1.5">
         {[1, 2, 3, 4].map((step) => {
           const isActive = score >= step;
@@ -65,7 +65,7 @@ export default function PasswordStrengthMeter({ password = '', showCriteria = tr
         })}
       </div>
 
-      {/* Checklist de critérios opcionais */}
+      {/* Checklist de criterios opcionais */}
       {showCriteria && (
         <div className="pt-1 grid grid-cols-1 sm:grid-cols-2 gap-1.5">
           {criteriaList.map((item) => (

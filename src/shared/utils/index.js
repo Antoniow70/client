@@ -1,5 +1,5 @@
 /**
- * Ponto de exportação centralizado para os utilitários da plataforma ALEM (Frontend).
+ * Ponto de exportacao centralizado para os utilitarios da plataforma ALEM (Frontend).
  */
 
 export * from './regex';

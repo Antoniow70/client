@@ -90,9 +90,7 @@ export default function Doar() {
     const emailVal = validateEmail(formData.email);
     if (!emailVal.isValid) newErrors.email = emailVal.error;
 
-    const phoneVal = validatePhone(formData.telefone, {
-      method: formData.metodoPagamento
-    });
+    const phoneVal = validatePhone(formData.telefone, { allowInternational: true });
     if (!phoneVal.isValid) newErrors.telefone = phoneVal.error;
 
     if (!formData.causa) newErrors.causa = 'Selecione uma causa a apoiar.';
@@ -246,11 +244,8 @@ export default function Doar() {
                       className={`form-input ${errors.telefone ? 'border-feedback-error focus:ring-feedback-error/10 focus:border-feedback-error' : ''}`}
                       placeholder="84 123 4567 ou +258..."
                     />
-                    {formData.metodoPagamento === 'mpesa' && !errors.telefone && (
-                      <p className="text-[11px] text-rose-500 font-medium pt-0.5">Para M-Pesa, utilize um numero Vodacom (84 ou 85).</p>
-                    )}
-                    {formData.metodoPagamento === 'emola' && !errors.telefone && (
-                      <p className="text-[11px] text-orange-500 font-medium pt-0.5">Para E-Mola, utilize um numero Movitel (86 ou 87).</p>
+                    {!errors.telefone && (
+                      <p className="text-[11px] text-brand-slate dark:text-dark-muted font-medium pt-0.5">Contacto para confirmação ou agradecimento da organização.</p>
                     )}
                     {errors.telefone && <p className="text-feedback-error text-[11px] mt-1">{errors.telefone}</p>}
                   </div>

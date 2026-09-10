@@ -62,29 +62,9 @@ export function validatePhone(phone, { method = null, allowInternational = true 
     else if (['82', '83'].includes(prefix)) carrier = 'Tmcel';
   }
 
-  // Validacao especifica para M-Pesa (exige rede Vodacom: 84 ou 85)
-  if (method === 'mpesa') {
-    if (!REGEX_PHONE_MPESA.test(cleaned)) {
-      return {
-        isValid: false,
-        carrier,
-        error: 'Para transferencias via M-Pesa, o numero deve ser Vodacom (iniciado por 84 ou 85).'
-      };
-    }
-    return { isValid: true, carrier: 'Vodacom' };
-  }
+  // Nota: O contacto inserido é para contacto da organização com o doador/usuário,
+  // portanto qualquer rede moçambicana válida ou internacional é aceita.
 
-  // Validacao especifica para e-Mola (exige rede Movitel: 86 ou 87)
-  if (method === 'emola') {
-    if (!REGEX_PHONE_EMOLA.test(cleaned)) {
-      return {
-        isValid: false,
-        carrier,
-        error: 'Para transferencias via E-Mola, o numero deve ser Movitel (iniciado por 86 ou 87).'
-      };
-    }
-    return { isValid: true, carrier: 'Movitel' };
-  }
 
   // Validacao geral de telefone mocambicano
   if (REGEX_PHONE_MZ.test(cleaned)) {

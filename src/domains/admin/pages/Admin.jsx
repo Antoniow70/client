@@ -203,7 +203,7 @@ export default function Admin() {
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-poloBlue/15">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-dark-bg">
         <Loader2 className="animate-spin text-brand-horizon" size={48} />
       </div>
     );
@@ -236,7 +236,7 @@ export default function Admin() {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-poloBlue/15 flex flex-col lg:flex-row max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-dark-bg flex flex-col lg:flex-row max-w-full overflow-x-hidden">
       <AdminSidebar
         menuItems={menuItems}
         activeTab={activeTab}
@@ -246,7 +246,7 @@ export default function Admin() {
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
 
-      <main className="flex-grow lg:ml-64 p-4 md:p-8 min-h-screen min-w-0 max-w-full overflow-x-hidden">
+      <main className="flex-grow lg:ml-64 p-4 md:p-8 min-h-screen min-w-0 max-w-full overflow-x-hidden bg-white dark:bg-dark-bg">
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-brand-bigStone dark:text-dark-text">

@@ -75,7 +75,7 @@
   }
 
   .card-surface {
-    @apply rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 dark:bg-dark-surface dark:border-dark-muted/10;
+    @apply rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 dark:bg-dark-surface dark:border-dark-muted/10;
   }
 }
 

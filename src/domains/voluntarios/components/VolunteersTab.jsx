@@ -75,15 +75,15 @@ export default function VolunteersTab({
         </div>
       </div>
 
-      <div className="card-surface overflow-hidden">
-        <div className="px-6 py-4 bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10 flex items-center justify-between">
+      <div className="card-surface overflow-hidden border border-slate-200/80">
+        <div className="px-6 py-4 bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10 flex items-center justify-between">
           <span className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">
             {getFilteredVolunteers().length} registo(s) encontrado(s)
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
-            <thead className="bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10">
+            <thead className="bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10">
               <tr>
                 <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider w-16">Leitura</th>
                 <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Nome / Info</th>

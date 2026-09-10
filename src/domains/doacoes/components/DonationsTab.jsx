@@ -95,7 +95,7 @@ export default function DonationsTab({
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Total Doadores</p>
             <p className="text-2xl font-bold text-brand-bigStone dark:text-dark-text mt-1">{filtered.length}</p>
@@ -104,7 +104,7 @@ export default function DonationsTab({
             <Users size={18} />
           </div>
         </div>
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-slate-400 dark:text-dark-muted uppercase tracking-wider">Via M-Pesa</p>
             <p className="text-2xl font-bold text-feedback-error mt-1">{byMethod['M-Pesa']}</p>
@@ -113,7 +113,7 @@ export default function DonationsTab({
             <Heart size={18} />
           </div>
         </div>
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-slate-400 dark:text-dark-muted uppercase tracking-wider">Via E-Mola</p>
             <p className="text-2xl font-bold text-orange-500 mt-1">{byMethod['E-Mola']}</p>
@@ -122,7 +122,7 @@ export default function DonationsTab({
             <Smartphone size={18} />
           </div>
         </div>
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-slate-400 dark:text-dark-muted uppercase tracking-wider">Transferencia</p>
             <p className="text-2xl font-bold text-feedback-success mt-1">{byMethod['Transferencia Bancaria']}</p>
@@ -135,21 +135,21 @@ export default function DonationsTab({
 
       {/* Donations Table */}
       {filtered.length === 0 ? (
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm rounded-3xl shadow-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 p-16 text-center">
+        <div className="bg-white dark:bg-dark-surface rounded-3xl shadow-sm border border-slate-200/80 dark:border-dark-muted/10 p-16 text-center">
           <Heart size={48} className="text-slate-300 mx-auto mb-4" />
           <p className="text-brand-eastBay dark:text-dark-muted font-medium">Nenhuma doacao encontrada para este periodo.</p>
           <p className="text-brand-eastBay dark:text-dark-muted text-sm mt-1">As doacoes submetidas no formulario aparecem aqui automaticamente.</p>
         </div>
       ) : (
-        <div className="card-surface overflow-hidden">
-          <div className="px-6 py-4 bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10 flex items-center justify-between">
+        <div className="card-surface overflow-hidden border border-slate-200/80">
+          <div className="px-6 py-4 bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10 flex items-center justify-between">
             <span className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">
               {filtered.length} registo{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
             </span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
-              <thead className="bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10">
+              <thead className="bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10">
                 <tr>
                   <th className="px-4 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider w-10 text-center">#</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Doador</th>

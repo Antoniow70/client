@@ -28,7 +28,7 @@ export default function BeneficiariesTab({
       </div>
 
       {beneficiaries.length === 0 ? (
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm rounded-3xl shadow-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 p-16 text-center">
+        <div className="bg-white dark:bg-dark-surface rounded-3xl shadow-sm border border-slate-200/80 dark:border-dark-muted/10 p-16 text-center">
           <Heart size={48} className="text-slate-300 mx-auto mb-4" />
           <p className="text-brand-eastBay dark:text-dark-muted font-medium">Nenhuma historia de beneficiario registada.</p>
           <p className="text-slate-400 text-sm mt-1">Adicione uma historia de superacao para inspirar outros doadores.</p>

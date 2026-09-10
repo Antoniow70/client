@@ -92,7 +92,7 @@ export default function SupportTab({
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Total Pedidos</p>
             <p className="text-2xl font-bold text-brand-bigStone dark:text-dark-text mt-1">{filtered.length}</p>
@@ -101,7 +101,7 @@ export default function SupportTab({
             <Mail size={18} />
           </div>
         </div>
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Pendentes</p>
             <p className="text-2xl font-bold text-feedback-warning mt-1">{pendentes}</p>
@@ -110,7 +110,7 @@ export default function SupportTab({
             <Calendar size={18} />
           </div>
         </div>
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
+        <div className="bg-white dark:bg-dark-surface border border-slate-200/80 dark:border-dark-muted/10 rounded-xl p-5 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Aprovados</p>
             <p className="text-2xl font-bold text-feedback-success mt-1">{aprovados}</p>
@@ -123,24 +123,24 @@ export default function SupportTab({
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div className="bg-white/40 dark:bg-dark-surface/40 backdrop-blur-sm rounded-3xl shadow-sm border border-brand-poloBlue/20 dark:border-dark-muted/10 p-16 text-center">
+        <div className="bg-white dark:bg-dark-surface rounded-3xl shadow-sm border border-slate-200/80 dark:border-dark-muted/10 p-16 text-center">
           <Mail size={48} className="text-slate-300 mx-auto mb-4" />
           <p className="text-brand-eastBay dark:text-dark-muted font-medium">Nenhum pedido de apoio encontrado.</p>
           <p className="text-brand-eastBay dark:text-dark-muted text-sm mt-1">Os pedidos submetidos no formulario aparecem aqui automaticamente.</p>
         </div>
       ) : (
-        <div className="card-surface overflow-hidden">
-          <div className="px-6 py-4 bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10 flex items-center justify-between">
+        <div className="card-surface overflow-hidden border border-slate-200/80">
+          <div className="px-6 py-4 bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10 flex items-center justify-between">
             <span className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">
               {filtered.length} registo{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
             </span>
-            <span className="text-xs font-semibold text-brand-eastBay dark:text-dark-muted bg-brand-poloBlue/20 dark:bg-white/10 px-2 py-1 rounded">
+            <span className="text-xs font-semibold text-brand-eastBay dark:text-dark-muted bg-slate-200/60 dark:bg-white/10 px-2 py-1 rounded">
               {filtered.filter(m => m.read_status !== 'Lido').length} nao lido(s)
             </span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
-              <thead className="bg-brand-poloBlue/50 dark:bg-dark-surface/80 border-b border-brand-poloBlue/20 dark:border-dark-muted/10">
+              <thead className="bg-slate-50 dark:bg-dark-surface/80 border-b border-slate-200/80 dark:border-dark-muted/10">
                 <tr>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider w-16">Leitura</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Nome / Info</th>

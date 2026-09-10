@@ -10,7 +10,7 @@ export default function AdminLogin({ email, setEmail, password, setPassword, han
   const [showPassword, setShowPassword] = useState(false);
   const [isForgotOpen, setIsForgotOpen] = useState(false);
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-brand-poloBlue/15 via-brand-poloBlue/20 to-slate-200 dark:from-dark-bg dark:via-dark-surface dark:to-dark-bg p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-dark-bg p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}

@@ -58,13 +58,33 @@ export default function OQueFazemos() {
         const data = await getProjects({ pillarId: activePillar.id });
         setProjects(data || []);
       } catch (err) {
-        console.error('Error loading projects:', err);
+        console.error('Error loading projects for pillar:', err);
       } finally {
         setLoadingProjects(false);
       }
     }
     loadProjects();
   }, [activePillar]);
+
+  useEffect(() => {
+    if (!loadingPillars && !loadingProjects) {
+      const savedScroll = sessionStorage.getItem('scroll_pos_/o-que-fazemos');
+      if (savedScroll) {
+        const targetY = parseInt(savedScroll, 10);
+        sessionStorage.removeItem('scroll_pos_/o-que-fazemos');
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            window.scrollTo({ top: targetY, behavior: 'instant' });
+          }, 50);
+        });
+      }
+    }
+  }, [loadingPillars, loadingProjects]);
+
+  const handleCardClick = (to, state = {}) => {
+    sessionStorage.setItem('scroll_pos_/o-que-fazemos', window.scrollY);
+    navigate(to, { state });
+  };
 
   return (
     <div className="bg-white dark:bg-dark-bg min-h-screen">
@@ -258,7 +278,7 @@ export default function OQueFazemos() {
                       <ProjectCard
                         key={project.id}
                         project={project}
-                        onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/o-que-fazemos' } })}
+                        onClick={() => handleCardClick('/projetos-sociais/' + project.id, { from: '/o-que-fazemos' })}
                       />
                     ))}
                   </div>

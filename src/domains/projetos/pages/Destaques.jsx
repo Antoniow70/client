@@ -58,6 +58,26 @@ export default function ProjetosSociais() {
     fetchProjects();
   }, [filter]);
 
+  useEffect(() => {
+    if (!loading) {
+      const savedScroll = sessionStorage.getItem('scroll_pos_/destaques');
+      if (savedScroll) {
+        const targetY = parseInt(savedScroll, 10);
+        sessionStorage.removeItem('scroll_pos_/destaques');
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            window.scrollTo({ top: targetY, behavior: 'instant' });
+          }, 50);
+        });
+      }
+    }
+  }, [loading]);
+
+  const handleCardClick = (to, state = {}) => {
+    sessionStorage.setItem('scroll_pos_/destaques', window.scrollY);
+    navigate(to, { state });
+  };
+
   const filteredProjects = projects.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (p.objetivos_especificos || '').toLowerCase().includes(searchTerm.toLowerCase());
@@ -186,7 +206,7 @@ export default function ProjetosSociais() {
                 >
                   <ProjectCard
                     project={project}
-                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/destaques' } })}
+                    onClick={() => handleCardClick('/projetos-sociais/' + project.id, { from: '/destaques' })}
                   />
                 </div>
               ))}
@@ -246,10 +266,9 @@ export default function ProjetosSociais() {
                   transition={{ delay: i * 0.08, duration: 0.5 }}
                   className="w-[82vw] max-w-[320px] sm:w-auto shrink-0 snap-center sm:shrink sm:snap-align-none h-full"
                 >
-                  <Link
-                    to={`/noticias/${item.id}`}
-                    state={{ from: '/destaques', fromLabel: 'Destaques' }}
-                    className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
+                  <div
+                    onClick={() => handleCardClick(`/noticias/${item.id}`, { from: '/destaques', fromLabel: 'Destaques' })}
+                    className="cursor-pointer group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                   >
                     <div>
                       {(item.capa_url || item.capa_data) && (
@@ -280,7 +299,7 @@ export default function ProjetosSociais() {
                         Ler mais <ChevronRight size={10} />
                       </span>
                     </div>
-                  </Link>
+                  </div>
                 </motion.div>
               ))}
           </div>

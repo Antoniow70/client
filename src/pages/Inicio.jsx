@@ -57,6 +57,26 @@ export default function Inicio() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      const savedScroll = sessionStorage.getItem('scroll_pos_/');
+      if (savedScroll) {
+        const targetY = parseInt(savedScroll, 10);
+        sessionStorage.removeItem('scroll_pos_/');
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            window.scrollTo({ top: targetY, behavior: 'instant' });
+          }, 50);
+        });
+      }
+    }
+  }, [loading]);
+
+  const handleCardClick = (to, state = {}) => {
+    sessionStorage.setItem('scroll_pos_/', window.scrollY);
+    navigate(to, { state });
+  };
+
   return (
     <div className="overflow-hidden bg-white dark:bg-dark-bg space-y-24 pb-24">
       {/* 1. Hero Section */}
@@ -226,6 +246,30 @@ export default function Inicio() {
         </div>
       </section>
 
+      {/* 4.5. Documentario Section */}
+      <section className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
+        <div className="text-center space-y-3 mb-10">
+          <span className="text-[10px] font-bold text-brand-horizon uppercase tracking-[0.3em] block">
+            Documentario
+          </span>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-brand-bigStone dark:text-white tracking-tight">
+            Conheca a Nossa Historia em Video
+          </h2>
+          <p className="text-brand-eastBay dark:text-dark-muted text-sm max-w-xl mx-auto leading-relaxed">
+            Assista ao documentario que conta a trajetoria da ALEM e o impacto que temos criado nas comunidades mocambicanas.
+          </p>
+        </div>
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-brand-poloBlue/15 dark:border-dark-muted/10 aspect-video max-w-4xl mx-auto bg-black">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            title="Documentario ALEM"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        </div>
+      </section>
+
       {/* 5. Projetos Mais Recentes */}
       <section id="secao-projetos" className="px-6 md:px-12 lg:px-16 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -265,7 +309,7 @@ export default function Inicio() {
                 >
                   <ProjectCard
                     project={project}
-                    onClick={() => navigate('/projetos-sociais/' + project.id, { state: { from: '/' } })}
+                    onClick={() => handleCardClick('/projetos-sociais/' + project.id, { from: '/' })}
                   />
                 </div>
               ))}
@@ -296,10 +340,9 @@ export default function Inicio() {
                 transition={{ delay: idx * 0.08, duration: 0.5 }}
                 className="h-full"
               >
-                <Link
-                  to={`/noticias/${item.id}`}
-                  state={{ from: '/', fromLabel: 'Início' }}
-                  className="group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
+                <div
+                  onClick={() => handleCardClick(`/noticias/${item.id}`, { from: '/', fromLabel: 'Início' })}
+                  className="cursor-pointer group block bg-white dark:bg-dark-surface rounded-2xl border border-brand-poloBlue/10 dark:border-dark-muted/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                 >
                   <div>
                     {(item.capa_url || item.capa_data) && (
@@ -330,7 +373,7 @@ export default function Inicio() {
                       Ler mais <ChevronRight size={10} />
                     </span>
                   </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>

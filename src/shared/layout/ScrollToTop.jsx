@@ -6,9 +6,10 @@ export default function ScrollToTop() {
   const navType = useNavigationType();
 
   useEffect(() => {
-    // On back/forward navigation (POP), do not reset scroll to top —
-    // allow the browser to restore the exact scroll position where the user was.
-    if (navType === 'POP') {
+    // If returning via POP or if a saved scroll position exists,
+    // let the destination page handle scroll restoration after loading its data.
+    const hasSavedScroll = sessionStorage.getItem('scroll_pos_' + pathname);
+    if (navType === 'POP' || hasSavedScroll) {
       return;
     }
 

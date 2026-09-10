@@ -95,9 +95,7 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
   doc.line(14, 40, pageWidth - 14, 40);
 
   // 3. Resumo Estatistico (2 Paineis)
-  const totalAmount = filteredDonations.reduce((sum, d) => sum + (parseFloat(d.valor) || 0), 0);
   const confirmedCount = filteredDonations.filter(d => d.status === 'Recebido' || d.status === 'Confirmado').length;
-  const hasValues = totalAmount > 0;
   const cardWidth = (pageWidth - 28 - 6) / 2;
   const cardHeight = 15;
   const yStats = 44;
@@ -105,8 +103,8 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
   const stats = [
     { label: 'NUMERO TOTAL DE DOACOES', value: String(filteredDonations.length) },
     { 
-      label: hasValues ? 'VALOR TOTAL ANGARIADO' : 'DOACOES CONFIRMADAS / RECEBIDAS', 
-      value: hasValues ? `MT ${totalAmount.toLocaleString('pt-PT', { minimumFractionDigits: 2 })}` : `${confirmedCount} registos confirmados` 
+      label: 'DOACOES CONFIRMADAS / RECEBIDAS', 
+      value: `${confirmedCount} registos confirmados` 
     },
   ];
 
@@ -133,7 +131,6 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
     { header: 'Doador',          dataKey: 'nome' },
     { header: 'Contacto',        dataKey: 'contacto' },
     { header: 'Causa / Projeto', dataKey: 'causa' },
-    ...(hasValues ? [{ header: 'Valor', dataKey: 'valor' }] : []),
     { header: 'Metodo',          dataKey: 'metodo' },
     { header: 'Estado',          dataKey: 'status' },
     { header: 'Data & Hora',     dataKey: 'data' },
@@ -145,7 +142,6 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
     nome:     d.nome || 'Doador Anonimo',
     contacto: [d.telefone, d.email].filter(Boolean).join('\n') || '—',
     causa:    d.causa || 'Geral / Onde necessario',
-    valor:    `MT ${parseFloat(d.valor || 0).toLocaleString('pt-PT', { minimumFractionDigits: 2 })}`,
     metodo:   d.metodo_pagamento || '—',
     status:   (d.status === 'Confirmado' || d.status === 'Recebido') ? 'Recebido' : (d.status || 'Pendente'),
     data:     formatDateTime(d.created_at),
@@ -175,15 +171,14 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
       cellPadding: { top: 4.5, right: 3, bottom: 4.5, left: 3 },
     },
     columnStyles: {
-      idx:      { halign: 'center', cellWidth: 8, fontStyle: 'bold' },
-      nome:     { cellWidth: 35, fontStyle: 'bold', textColor: COLORS.slate900 },
-      contacto: { cellWidth: 35 },
-      causa:    { cellWidth: 35 },
-      ...(hasValues ? { valor: { halign: 'right', fontStyle: 'bold', cellWidth: 26, textColor: COLORS.slate900 } } : {}),
-      metodo:   { cellWidth: 26, halign: 'center' },
-      status:   { cellWidth: 24, halign: 'center', fontStyle: 'bold' },
-      data:     { cellWidth: 26, halign: 'center' },
-      mensagem: { cellWidth: hasValues ? 45 : 55, halign: 'center' },
+      idx:      { halign: 'center', cellWidth: 10, fontStyle: 'bold' },
+      nome:     { cellWidth: 42, fontStyle: 'bold', textColor: COLORS.slate900 },
+      contacto: { cellWidth: 42 },
+      causa:    { cellWidth: 42 },
+      metodo:   { cellWidth: 32, halign: 'center' },
+      status:   { cellWidth: 28, halign: 'center', fontStyle: 'bold' },
+      data:     { cellWidth: 32, halign: 'center' },
+      mensagem: { cellWidth: 41, halign: 'center' },
     },
     didParseCell: (data) => {
       if (data.section === 'body' && data.column.dataKey === 'status') {
@@ -209,7 +204,7 @@ export function exportDonationsPDF(filteredDonations, { filterStart = '', filter
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...COLORS.slate500);
     doc.text(
-      'ALEM — Associacao de Luta e Esperanca de Mocambique  |  Documento Financeiro Interno',
+      'ALEM — Associacao de Luta e Esperanca de Mocambique  |  Registo de Doacoes',
       14,
       pageHeight - 9
     );

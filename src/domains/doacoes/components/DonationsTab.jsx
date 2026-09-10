@@ -17,7 +17,6 @@ export default function DonationsTab({
   updateDonationStatus
 }) {
   const filtered = getFilteredDonations();
-  const total = filtered.reduce((s, d) => s + (parseFloat(d.valor) || 0), 0);
   const byMethod = { 'M-Pesa': 0, 'E-Mola': 0, 'Transferencia Bancaria': 0 };
   filtered.forEach(d => {
     const m = d.metodo_pagamento;
@@ -134,9 +133,6 @@ export default function DonationsTab({
             <span className="text-[11px] font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">
               {filtered.length} registo{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
             </span>
-            <span className="text-xs text-brand-eastBay dark:text-dark-muted font-medium">
-              Total: <span className="font-bold text-feedback-success">MT {total.toLocaleString('pt-PT', { minimumFractionDigits: 2 })}</span>
-            </span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -146,7 +142,6 @@ export default function DonationsTab({
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Doador</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Telefone</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Causa</th>
-                  <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Valor</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Pagamento</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Estado</th>
                   <th className="px-6 py-3.5 text-xs font-bold text-brand-eastBay dark:text-dark-muted uppercase tracking-wider">Data & Hora</th>
@@ -167,9 +162,6 @@ export default function DonationsTab({
                       <td className="px-6 py-4 text-brand-eastBay dark:text-dark-muted text-sm font-medium">{d.telefone}</td>
                       <td className="px-6 py-4">
                         <span className="px-2 py-0.5 bg-brand-poloBlue/15 text-brand-eastBay text-[10px] font-bold rounded border border-brand-poloBlue/20 whitespace-nowrap">{d.causa}</span>
-                      </td>
-                      <td className="px-6 py-4 font-bold text-feedback-success whitespace-nowrap">
-                        MT {parseFloat(d.valor || 0).toLocaleString('pt-PT', { minimumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2 py-0.5 text-[10px] font-semibold rounded whitespace-nowrap ${

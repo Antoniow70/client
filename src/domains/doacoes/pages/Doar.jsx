@@ -20,7 +20,6 @@ export default function Doar() {
     email: '',
     telefone: '',
     causa: '',
-    valor: '',
     mensagem: '',
     metodoPagamento: ''
   });
@@ -49,8 +48,6 @@ export default function Doar() {
     }
   };
 
-  const quickAmounts = ['200', '500', '1000', '2500', '5000'];
-
   const [causas, setCausas] = useState(['Geral']);
 
   useEffect(() => {
@@ -72,8 +69,6 @@ export default function Doar() {
     let formattedValue = value;
     if (name === 'telefone') {
       formattedValue = maskPhone(value);
-    } else if (name === 'valor') {
-      formattedValue = value.replace(/[^\d.]/g, '');
     }
     setFormData(prev => ({ ...prev, [name]: formattedValue }));
     if (errors[name]) {
@@ -95,13 +90,6 @@ export default function Doar() {
 
     if (!formData.causa) newErrors.causa = 'Selecione uma causa a apoiar.';
     if (!formData.metodoPagamento) newErrors.metodoPagamento = 'Selecione um meio de pagamento.';
-
-    if (formData.valor) {
-      const num = parseFloat(formData.valor);
-      if (isNaN(num) || num <= 0) {
-        newErrors.valor = 'Introduza um valor valido superior a zero.';
-      }
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -126,7 +114,7 @@ export default function Doar() {
           email: cleanEmail,
           telefone: cleanTel,
           causa: formData.causa,
-          valor: parseFloat(formData.valor) || 0,
+          valor: 0,
           mensagem: cleanString(formData.mensagem) || null,
           metodo_pagamento: paymentMap[formData.metodoPagamento] || formData.metodoPagamento
         });
@@ -245,7 +233,7 @@ export default function Doar() {
                       placeholder="84 123 4567 ou +258..."
                     />
                     {!errors.telefone && (
-                      <p className="text-[11px] text-brand-slate dark:text-dark-muted font-medium pt-0.5">Contacto para confirmação ou agradecimento da organização.</p>
+                      <p className="text-[11px] text-brand-slate dark:text-dark-muted font-medium pt-0.5">Contacto para confirmacao ou agradecimento da organizacao.</p>
                     )}
                     {errors.telefone && <p className="text-feedback-error text-[11px] mt-1">{errors.telefone}</p>}
                   </div>
@@ -268,51 +256,6 @@ export default function Doar() {
                       </div>
                     </div>
                     {errors.causa && <p className="text-feedback-error text-[11px] mt-1">{errors.causa}</p>}
-                  </div>
-
-                  {/* Valor da Contribuicao */}
-                  <div className="space-y-2 md:col-span-2">
-                    <div className="flex items-center justify-between">
-                      <label className="form-label !text-brand-bigStone dark:!text-dark-text">Valor da Contribuicao (MT)</label>
-                      <span className="text-[11px] text-slate-400">Opcional no registo (MZN)</span>
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        name="valor"
-                        inputMode="numeric"
-                        value={formData.valor}
-                        onChange={handleChange}
-                        className={`form-input pr-12 font-semibold ${errors.valor ? 'border-feedback-error focus:ring-feedback-error/10 focus:border-feedback-error' : ''}`}
-                        placeholder="Ex: 500"
-                      />
-                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
-                        MT
-                      </span>
-                    </div>
-                    {errors.valor && <p className="text-feedback-error text-[11px] mt-1">{errors.valor}</p>}
-
-                    {/* Quick Amount Chips */}
-                    <div className="flex items-center gap-2 flex-wrap pt-1">
-                      <span className="text-[11px] text-slate-500 font-medium">Sugestoes rapidas:</span>
-                      {quickAmounts.map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          onClick={() => {
-                            setFormData(prev => ({ ...prev, valor: amt }));
-                            if (errors.valor) setErrors(prev => ({ ...prev, valor: '' }));
-                          }}
-                          className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors cursor-pointer border ${
-                            formData.valor === amt
-                              ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                              : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200 dark:bg-dark-bg dark:text-dark-text dark:border-dark-muted/20'
-                          }`}
-                        >
-                          {amt} MT
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
 

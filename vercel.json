@@ -1,7 +1,10 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/api/suporte", "destination": "/api/suporte" },
+    { "source": "/api/send-email", "destination": "/api/send-email" },
+    { "source": "/api/auth/forgot-password", "destination": "/api/auth/forgot-password" },
+    { "source": "/api/(.*)", "destination": "https://server-1-flm1.onrender.com/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
